@@ -1,6 +1,7 @@
 package eci.edu.co.springBootRestAPITask.controller;
 
 import eci.edu.co.springBootRestAPITask.data.Task;
+import eci.edu.co.springBootRestAPITask.dto.TaskDto;
 import eci.edu.co.springBootRestAPITask.service.TaskService;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
@@ -35,16 +36,15 @@ public class TaskController
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<Task> create(@RequestBody Task task)
+    public ResponseEntity<Task> create(@RequestBody TaskDto taskDto)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(taskService.create(task));
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.create(new Task(taskDto)));
     }
 
     @PutMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<Task> update(@RequestBody Task task, @PathVariable String id)
-    {
-        return ResponseEntity.status(HttpStatus.OK).body(taskService.update(task, id));
+    public ResponseEntity<Task> update(@RequestBody TaskDto taskDto, @PathVariable String id) {
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.update(new Task(taskDto, id), id));
     }
 
     @DeleteMapping("/{id}")

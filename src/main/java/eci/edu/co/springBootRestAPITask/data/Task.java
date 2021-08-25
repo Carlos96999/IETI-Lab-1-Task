@@ -1,17 +1,24 @@
 package eci.edu.co.springBootRestAPITask.data;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import eci.edu.co.springBootRestAPITask.collections.Status;
+import eci.edu.co.springBootRestAPITask.dto.TaskDto;
+
+import java.util.UUID;
+import java.util.Date;
 
 public class Task
 {
     private String id;
     private String name;
     private Status status;
+    private String description;
     private String assignedTo;
     private String dueDate;
-    private String created;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date created;
 
-    public Task(String id, String name, Status status, String assignedTo, String dueDate, String created)
+    public Task(String id, String name, Status status, String assignedTo, String dueDate, Date created)
     {
         this.id = id;
         this.name = name;
@@ -19,6 +26,26 @@ public class Task
         this.assignedTo = assignedTo;
         this.dueDate = dueDate;
         this.created = created;
+    }
+
+    public Task(TaskDto taskDto) {
+        this.id = UUID.randomUUID().toString();
+        this.name = taskDto.getName();
+        this.description = taskDto.getDescription();
+        this.status = taskDto.getStatus();
+        this.assignedTo = taskDto.getAssignedTo();
+        this.dueDate = taskDto.getDueDate();
+        this.created = new Date();
+    }
+
+    public Task(TaskDto taskDto, String id) {
+        this.id =  id;
+        this.name = taskDto.getName();
+        this.description = taskDto.getDescription();
+        this.status = taskDto.getStatus();
+        this.assignedTo = taskDto.getAssignedTo();
+        this.dueDate = taskDto.getDueDate();
+        this.created = new Date();
     }
 
     public String getId() {
@@ -61,11 +88,11 @@ public class Task
         this.dueDate = dueDate;
     }
 
-    public String getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 }

@@ -1,6 +1,9 @@
 package eci.edu.co.springBootRestAPITask.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import eci.edu.co.springBootRestAPITask.collections.Status;
+
+import java.util.Date;
 
 public class TaskDto
 {
@@ -9,9 +12,10 @@ public class TaskDto
     private Status status;
     private String assignedTo;
     private String dueDate;
-    private String created;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date created;
 
-    public TaskDto(String name, String description, Status status, String assignedTo, String dueDate, String created) {
+    public TaskDto(String name, String description, Status status, String assignedTo, String dueDate, Date created) {
         this.name = name;
         this.description = description;
         this.status = status;
@@ -60,11 +64,11 @@ public class TaskDto
         this.dueDate = dueDate;
     }
 
-    public String getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 }
